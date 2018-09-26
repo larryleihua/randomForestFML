@@ -295,7 +295,7 @@ void classRF(double *x, int *dimx, int *cl, int *ncl, int *cat, int *maxcat,
           zeroDouble(win, nsample);
           if (sB) { /* sequential bootstrap */
             for (n = 0; n < *sampsize; ++n) {
-              k = sBvec[jb * sampsize + n];
+              k = sBvec[jb * *sampsize + n];
               tclasspop[cl[k] - 1] += classwt[cl[k]-1];
               win[k] += classwt[cl[k]-1];
               jin[k] += 1;
