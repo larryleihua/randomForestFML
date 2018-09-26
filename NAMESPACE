@@ -1,22 +1,22 @@
-useDynLib(randomForest, .registration=TRUE)
+useDynLib(randomForestFML, .registration=TRUE)
 
 export(combine, getTree, grow, importance, margin, MDSplot, na.roughfix,
-       partialPlot, randomForest, rfImpute, treesize, tuneRF,
+       partialPlot, randomForestFML, rfImpute, treesize, tuneRF,
        varImpPlot, varUsed, rfNews, outlier, classCenter, rfcv)
 
-S3method(print, randomForest)
-S3method(predict, randomForest)
-S3method(plot, randomForest)
+S3method(print, randomForestFML)
+S3method(predict, randomForestFML)
+S3method(plot, randomForestFML)
 S3method(plot, margin)
-S3method(margin, randomForest)
-S3method(partialPlot, randomForest)
-S3method(grow, randomForest)
-S3method(importance, randomForest)
-S3method(outlier, randomForest)
+S3method(margin, randomForestFML)
+S3method(partialPlot, randomForestFML)
+S3method(grow, randomForestFML)
+S3method(importance, randomForestFML)
+S3method(outlier, randomForestFML)
 S3method(outlier, default)
 
-S3method(randomForest, formula)
-S3method(randomForest, default)
+S3method(randomForestFML, formula)
+S3method(randomForestFML, default)
 S3method(rfImpute, formula)
 S3method(rfImpute, default)
 
