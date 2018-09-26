@@ -15,7 +15,7 @@ In R:
 ```{r}
 devtools::install_github("larryleihua/randomForestFML")
 library(randomForestFML)
-nTree <- 200
+nTree <- 10 # use a small number for experiment, otherwise very slow!!
 seedvec <- seq(1,nTree)
 iRun <- function(i)
 {
