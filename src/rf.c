@@ -44,7 +44,7 @@ void classRF(double *x, int *dimx, int *cl, int *ncl, int *cat, int *maxcat,
              int *nodeclass, double *xbestsplit, double *errtr,
              int *testdat, double *xts, int *clts, int *nts, double *countts,
              int *outclts, int *labelts, double *proxts, double *errts,
-             int *inbag) {
+             int *inbag, int *sBvec) {
   /******************************************************************
    *  C wrapper for random forests:  get input from R and drive
    *  the Fortran routines.
@@ -89,7 +89,7 @@ void classRF(double *x, int *dimx, int *cl, int *ncl, int *cat, int *maxcat,
   keepInbag, nstrata;
   int jb, j, n, m, k, idxByNnode, idxByNsample, imp, localImp, iprox,
   oobprox, keepf, replace, stratify, trace, *nright,
-  *nrightimp, *nout, *nclts, Ntree;
+  *nrightimp, *nout, *nclts, Ntree, sB;
 
   int *out, *nodepop, *jin, *nodex,
   *nodexts, *nodestart, *ta, *ncase, *jerr, *varUsed,
@@ -112,6 +112,7 @@ void classRF(double *x, int *dimx, int *cl, int *ncl, int *cat, int *maxcat,
   replace  = Options[7];
   stratify = Options[8];
   keepInbag = Options[9];
+  sB = Options[10];
   mdim     = dimx[0];
   nsample0 = dimx[1];
   nclass   = (*ncl==1) ? 2 : *ncl;
@@ -292,28 +293,36 @@ void classRF(double *x, int *dimx, int *cl, int *ncl, int *cat, int *maxcat,
           zeroInt(jin, nsample);
           zeroDouble(tclasspop, nclass);
           zeroDouble(win, nsample);
-
-
-          if (replace) {
+          if (sB) { /* sequential bootstrap */
             for (n = 0; n < *sampsize; ++n) {
-              k = unif_rand() * nsample;
+              k = sBvec[jb * sampsize + n];
               tclasspop[cl[k] - 1] += classwt[cl[k]-1];
               win[k] += classwt[cl[k]-1];
               jin[k] += 1;
-            }
           } else {
-            for (n = 0; n < nsample; ++n) nind[n] = n;
-            last = nsample - 1;
-            for (n = 0; n < *sampsize; ++n) {
-              ktmp = (int) (unif_rand() * (last+1));
-              k = nind[ktmp];
-              swapInt(nind[ktmp], nind[last]);
-              last--;
-              tclasspop[cl[k] - 1] += classwt[cl[k]-1];
-              win[k] += classwt[cl[k]-1];
-              jin[k] += 1;
+            if (replace) {
+              for (n = 0; n < *sampsize; ++n) {
+                k = unif_rand() * nsample;
+                tclasspop[cl[k] - 1] += classwt[cl[k]-1];
+                win[k] += classwt[cl[k]-1];
+                jin[k] += 1;
+              }
+            } else {
+              for (n = 0; n < nsample; ++n) nind[n] = n;
+              last = nsample - 1;
+              for (n = 0; n < *sampsize; ++n) {
+                ktmp = (int) (unif_rand() * (last+1));
+                k = nind[ktmp];
+                swapInt(nind[ktmp], nind[last]);
+                last--;
+                tclasspop[cl[k] - 1] += classwt[cl[k]-1];
+                win[k] += classwt[cl[k]-1];
+                jin[k] += 1;
+              }
             }
           }
+
+
 
 
           /* check if any class is missing in the sample */

@@ -13,7 +13,7 @@ mylevels <- function(x) if (is.factor(x)) levels(x) else 0
              proximity, oob.prox=proximity,
              norm.votes=TRUE, do.trace=FALSE,
              keep.forest=!is.null(y) && is.null(xtest), corr.bias=FALSE,
-             keep.inbag=FALSE, ...) {
+             keep.inbag=FALSE, sBvec=0, ...) {
     addclass <- is.null(y)
     classRF <- addclass || is.factor(y)
     if (!classRF && length(unique(y)) <= 5) {
@@ -262,6 +262,7 @@ mylevels <- function(x) if (is.factor(x)) levels(x) else 0
                     errts = error.test,
                     inbag = if (keep.inbag)
                     matrix(integer(n * ntree), n) else integer(n),
+                    sBvec = as.integer(sBvec),
                     #DUP=FALSE,
                     PACKAGE="randomForestFML")[-1]
         if (keep.forest) {
