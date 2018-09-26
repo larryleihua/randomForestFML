@@ -1,4 +1,4 @@
-Package: randomForest
+Package: randomForestFML
 Title: Breiman and Cutler's Random Forests for Classification and
         Regression
 Version: 4.6-14
