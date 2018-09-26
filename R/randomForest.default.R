@@ -13,7 +13,15 @@ mylevels <- function(x) if (is.factor(x)) levels(x) else 0
              proximity, oob.prox=proximity,
              norm.votes=TRUE, do.trace=FALSE,
              keep.forest=!is.null(y) && is.null(xtest), corr.bias=FALSE,
-             keep.inbag=FALSE, sBvec=0, ...) {
+             keep.inbag=FALSE, SB=0, ...) {
+
+    ## check sequential bootstrap
+    if (SB[1]!=0){
+      SB <- as.vector(SB)
+      if(length(SB)!=ntree*nrow(x))
+      stop("The number of indices in SB is not the same as ntree*sampleSize!")
+    }
+
     addclass <- is.null(y)
     classRF <- addclass || is.factor(y)
     if (!classRF && length(unique(y)) <= 5) {
@@ -262,7 +270,7 @@ mylevels <- function(x) if (is.factor(x)) levels(x) else 0
                     errts = error.test,
                     inbag = if (keep.inbag)
                     matrix(integer(n * ntree), n) else integer(n),
-                    sBvec = as.integer(sBvec),
+                    sbvec = as.integer(SB),
                     #DUP=FALSE,
                     PACKAGE="randomForestFML")[-1]
         if (keep.forest) {
@@ -409,6 +417,7 @@ mylevels <- function(x) if (is.factor(x)) levels(x) else 0
                     oob.times = integer(n),
                     inbag = if (keep.inbag)
                     matrix(integer(n * ntree), n) else integer(1),
+                    sbvec = as.integer(sbvec),
                     #DUP=FALSE,
                     PACKAGE="randomForestFML")[c(16:28, 36:41)]
         ## Format the forest component, if present.

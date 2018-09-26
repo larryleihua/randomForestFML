@@ -44,7 +44,7 @@ void classRF(double *x, int *dimx, int *cl, int *ncl, int *cat, int *maxcat,
              int *nodeclass, double *xbestsplit, double *errtr,
              int *testdat, double *xts, int *clts, int *nts, double *countts,
              int *outclts, int *labelts, double *proxts, double *errts,
-             int *inbag, int *sBvec) {
+             int *inbag, int *sbvec) {
   /******************************************************************
    *  C wrapper for random forests:  get input from R and drive
    *  the Fortran routines.
@@ -87,9 +87,9 @@ void classRF(double *x, int *dimx, int *cl, int *ncl, int *cat, int *maxcat,
   int nsample0, mdim, nclass, addClass, mtry, ntest, nsample, ndsize,
   mimp, nimp, near, nuse, noutall, nrightall, nrightimpall,
   keepInbag, nstrata;
-  int jb, j, n, m, k, idxByNnode, idxByNsample, imp, localImp, iprox,
+  int jb, j, n, m, k, tmp_k, idxByNnode, idxByNsample, imp, localImp, iprox,
   oobprox, keepf, replace, stratify, trace, *nright,
-  *nrightimp, *nout, *nclts, Ntree, sB;
+  *nrightimp, *nout, *nclts, Ntree;
 
   int *out, *nodepop, *jin, *nodex,
   *nodexts, *nodestart, *ta, *ncase, *jerr, *varUsed,
@@ -235,6 +235,7 @@ void classRF(double *x, int *dimx, int *cl, int *ncl, int *cat, int *maxcat,
   }
   idxByNnode = 0;
   idxByNsample = 0;
+
   for (jb = 0; jb < Ntree; jb++) {
     /* Do we need to simulate data for the second class? */
     if (addClass) {
@@ -292,13 +293,14 @@ void classRF(double *x, int *dimx, int *cl, int *ncl, int *cat, int *maxcat,
           zeroInt(jin, nsample);
           zeroDouble(tclasspop, nclass);
           zeroDouble(win, nsample);
-          if (sBvec) { /* sequential bootstrap */
-            for (n = 0; n < *sampsize; ++n) {
-              k = sBvec[jb * *sampsize + n];
-              tclasspop[cl[k] - 1] += classwt[cl[k]-1];
-              win[k] += classwt[cl[k]-1];
-              jin[k] += 1;
-            }
+          if (sbvec[0]) { /* sequential bootstrap */
+             for (n = 0; n < nsample; ++n) {
+               tmp_k = jb*nsample+n;
+               k = sbvec[tmp_k]-1;
+               tclasspop[cl[k] - 1] += classwt[cl[k]-1];
+               win[k] += classwt[cl[k]-1];
+               jin[k] += 1;
+             }
           }else {
             if (replace) {
               for (n = 0; n < *sampsize; ++n) {
