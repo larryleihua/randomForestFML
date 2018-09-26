@@ -112,7 +112,6 @@ void classRF(double *x, int *dimx, int *cl, int *ncl, int *cat, int *maxcat,
   replace  = Options[7];
   stratify = Options[8];
   keepInbag = Options[9];
-  sB = Options[10];
   mdim     = dimx[0];
   nsample0 = dimx[1];
   nclass   = (*ncl==1) ? 2 : *ncl;
@@ -293,7 +292,7 @@ void classRF(double *x, int *dimx, int *cl, int *ncl, int *cat, int *maxcat,
           zeroInt(jin, nsample);
           zeroDouble(tclasspop, nclass);
           zeroDouble(win, nsample);
-          if (sB) { /* sequential bootstrap */
+          if (sBvec) { /* sequential bootstrap */
             for (n = 0; n < *sampsize; ++n) {
               k = sBvec[jb * *sampsize + n];
               tclasspop[cl[k] - 1] += classwt[cl[k]-1];
