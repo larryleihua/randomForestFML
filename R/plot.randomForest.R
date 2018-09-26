@@ -1,6 +1,6 @@
-plot.randomForest <- function(x, type="l", main=deparse(substitute(x)), ...) {
+plot.randomForestFML <- function(x, type="l", main=deparse(substitute(x)), ...) {
   if(x$type == "unsupervised")
-    stop("No plot for unsupervised randomForest.")
+    stop("No plot for unsupervised randomForestFML.")
   test <- !(is.null(x$test$mse) || is.null(x$test$err.rate))
   if(x$type == "regression") {
     err <- x$mse
@@ -19,5 +19,3 @@ plot.randomForest <- function(x, type="l", main=deparse(substitute(x)), ...) {
   }
   invisible(err)
 }
-
-  

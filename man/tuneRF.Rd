@@ -1,9 +1,9 @@
 \name{tuneRF}
 \alias{tuneRF}
-\title{Tune randomForest for the optimal mtry parameter}
+\title{Tune randomForestFML for the optimal mtry parameter}
 \description{
   Starting with the default value of mtry, search for the optimal value
-  (with respect to Out-of-Bag error estimate) of mtry for randomForest.
+  (with respect to Out-of-Bag error estimate) of mtry for randomForestFML.
 }
 \usage{
 tuneRF(x, y, mtryStart, ntreeTry=50, stepFactor=2, improve=0.05,
@@ -14,7 +14,7 @@ tuneRF(x, y, mtryStart, ntreeTry=50, stepFactor=2, improve=0.05,
   \item{y}{response vector (factor for classification, numeric for
     regression)}
   \item{mtryStart}{starting value of mtry; default is the same as in
-    \code{\link{randomForest}}}
+    \code{\link{randomForestFML}}}
   \item{ntreeTry}{number of trees used at the tuning step}
   \item{stepFactor}{at each iteration, mtry is inflated (or deflated) by
     this value}
@@ -23,14 +23,14 @@ tuneRF(x, y, mtryStart, ntreeTry=50, stepFactor=2, improve=0.05,
   \item{trace}{whether to print the progress of the search}
   \item{plot}{whether to plot the OOB error as function of mtry}
   \item{doBest}{whether to run a forest using the optimal mtry found}
-  \item{...}{options to be given to \code{\link{randomForest}}}
+  \item{...}{options to be given to \code{\link{randomForestFML}}}
 }
 \value{
   If \code{doBest=FALSE} (default), it returns a matrix whose first
   column contains the mtry values searched, and the second column the
   corresponding OOB error.
 
-  If \code{doBest=TRUE}, it returns the \code{\link{randomForest}}
+  If \code{doBest=TRUE}, it returns the \code{\link{randomForestFML}}
   object produced with the optimal \code{mtry}.
 }
 %\details{
@@ -38,7 +38,7 @@ tuneRF(x, y, mtryStart, ntreeTry=50, stepFactor=2, improve=0.05,
 %\references{
 %}
 \seealso{
-\code{\link{randomForest}}
+\code{\link{randomForestFML}}
 }
 \examples{
 data(fgl, package="MASS")

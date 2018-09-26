@@ -22,10 +22,10 @@ rfcv(trainx, trainy, cv.fold=5, scale="log", step=0.5,
   \item{step}{if \code{log=TRUE}, the fraction of variables to remove at
 	each step, else remove this many variables at a time}
   \item{mtry}{a function of number of remaining predictor variables to
-	use as the \code{mtry} parameter in the \code{randomForest} call}
+	use as the \code{mtry} parameter in the \code{randomForestFML} call}
   \item{recursive}{whether variable importance is (re-)assessed at each
   step of variable reduction}
-  \item{...}{other arguments passed on to \code{randomForest}}
+  \item{...}{other arguments passed on to \code{randomForestFML}}
 }
 \value{
   A list with the following components:
@@ -46,7 +46,7 @@ Pharmaceutical Molecules'', MCS 2004, Roli, F. and Windeatt, T. (Eds.)
 pp. 334-343.
 }
 \seealso{
-  \code{\link{randomForest}}, \code{\link{importance}}
+  \code{\link{randomForestFML}}, \code{\link{importance}}
 }
 \examples{
 set.seed(647)
@@ -68,4 +68,3 @@ matplot(result[[1]]$n.var, cbind(rowMeans(error.cv), error.cv), type="l",
 \author{Andy Liaw}
 \keyword{classif}
 \keyword{regression}
-

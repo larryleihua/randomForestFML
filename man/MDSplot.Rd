@@ -1,14 +1,14 @@
 \name{MDSplot}
 \alias{MDSplot}
-\title{Multi-dimensional Scaling Plot of Proximity matrix from randomForest}
+\title{Multi-dimensional Scaling Plot of Proximity matrix from randomForestFML}
 \description{
-  Plot the scaling coordinates of the proximity matrix from randomForest.
+  Plot the scaling coordinates of the proximity matrix from randomForestFML.
 }
 \usage{
 MDSplot(rf, fac, k=2, palette=NULL, pch=20, ...)
 }
 \arguments{
-  \item{rf}{an object of class \code{\link{randomForest}} that contains
+  \item{rf}{an object of class \code{\link{randomForestFML}} that contains
     the \code{proximity} component.}
   \item{fac}{a factor that was used as response to train \code{rf}.}
   \item{k}{number of dimensions for the scaling coordinates.}
@@ -25,11 +25,11 @@ MDSplot(rf, fac, k=2, palette=NULL, pch=20, ...)
   If \code{k > 2}, \code{\link{pairs}} is used to produce the
   scatterplot matrix of the coordinates.
 }
-\seealso{\code{\link{randomForest}}}
+\seealso{\code{\link{randomForestFML}}}
 \examples{
 set.seed(1)
 data(iris)
-iris.rf <- randomForest(Species ~ ., iris, proximity=TRUE,
+iris.rf <- randomForestFML(Species ~ ., iris, proximity=TRUE,
                         keep.forest=FALSE)
 MDSplot(iris.rf, iris$Species)
 ## Using different symbols for the classes:

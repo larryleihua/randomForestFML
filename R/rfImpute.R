@@ -35,9 +35,9 @@ rfImpute.default <- function(x, y, iter=5, ntree=300, ...) {
     } else {
         isfac <- rep(FALSE, ncol(x))
     }
-    
+
     for (i in 1:iter) {
-        prox <- randomForest(xf, y, ntree=ntree, ..., do.trace=ntree,
+        prox <- randomForestFML(xf, y, ntree=ntree, ..., do.trace=ntree,
                              proximity=TRUE)$proximity
         for (j in hasNA) {
             miss <- which(is.na(x[, j]))

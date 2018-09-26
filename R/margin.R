@@ -2,7 +2,7 @@ margin <- function(x, ...) {
     UseMethod("margin")
 }
 
-margin.randomForest <- function(x, ...) {
+margin.randomForestFML <- function(x, ...) {
     if (x$type == "regression") {
         stop("margin not defined for regression Random Forests")
     }
@@ -44,4 +44,3 @@ plot.margin <- function(x, sort=TRUE, ...) {
     }
     plot.default(x, col=pal[as.numeric(nF)], pch=20, ... )
 }
-

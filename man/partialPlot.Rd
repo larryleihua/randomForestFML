@@ -1,7 +1,7 @@
 \name{partialPlot}
 \alias{partialPlot}
 \alias{partialPlot.default}
-\alias{partialPlot.randomForest}
+\alias{partialPlot.randomForestFML}
 
 \title{Partial dependence plot}
 
@@ -12,7 +12,7 @@ response (regression).
 }
 
 \usage{
-\method{partialPlot}{randomForest}(x, pred.data, x.var, which.class,
+\method{partialPlot}{randomForestFML}(x, pred.data, x.var, which.class,
       w, plot = TRUE, add = FALSE,
       n.pt = min(length(unique(pred.data[, xname])), 51),
       rug = TRUE, xlab=deparse(substitute(x.var)), ylab="",
@@ -21,7 +21,7 @@ response (regression).
 }
 
 \arguments{
-  \item{x}{an object of class \code{randomForest}, which contains a
+  \item{x}{an object of class \code{randomForestFML}, which contains a
     \code{forest} component.}
   \item{pred.data}{a data frame used for contructing the plot, usually
     the training data used to contruct the random forest.}
@@ -64,8 +64,8 @@ where \eqn{K} is the number of classes, \eqn{k} is \code{which.class},
 and \eqn{p_j} is the proportion of votes for class \eqn{j}.
 }
 \note{
-  The \code{randomForest} object must contain the \code{forest}
-  component; i.e., created with \code{randomForest(...,
+  The \code{randomForestFML} object must contain the \code{forest}
+  component; i.e., created with \code{randomForestFML(...,
     keep.forest=TRUE)}.
 
   This function runs quite slow for large data sets.
@@ -74,21 +74,21 @@ and \eqn{p_j} is the proportion of votes for class \eqn{j}.
 Friedman, J. (2001). Greedy function approximation: the gradient
 boosting machine, \emph{Ann. of Stat.}}
 
-\seealso{\code{\link{randomForest}}}
+\seealso{\code{\link{randomForestFML}}}
 
 \author{Andy Liaw \email{andy\_liaw@merck.com}}
 
 \examples{
 data(iris)
 set.seed(543)
-iris.rf <- randomForest(Species~., iris)
+iris.rf <- randomForestFML(Species~., iris)
 partialPlot(iris.rf, iris, Petal.Width, "versicolor")
 
 ## Looping over variables ranked by importance:
 data(airquality)
 airquality <- na.omit(airquality)
 set.seed(131)
-ozone.rf <- randomForest(Ozone ~ ., airquality, importance=TRUE)
+ozone.rf <- randomForestFML(Ozone ~ ., airquality, importance=TRUE)
 imp <- importance(ozone.rf)
 impvar <- rownames(imp)[order(imp[, 1], decreasing=TRUE)]
 op <- par(mfrow=c(2, 3))
@@ -102,4 +102,3 @@ par(op)
 \keyword{classif}
 \keyword{regression}
 \keyword{tree}
-

@@ -1,7 +1,7 @@
 MDSplot <- function(rf, fac, k=2, palette=NULL, pch=20, ...) {
-    if (!inherits(rf, "randomForest")) 
-        stop(deparse(substitute(rf)), " must be a randomForest object")
-    if(is.null(rf$proximity)) 
+    if (!inherits(rf, "randomForestFML"))
+        stop(deparse(substitute(rf)), " must be a randomForestFML object")
+    if(is.null(rf$proximity))
         stop(deparse(substitute(rf)), " does not contain a proximity matrix")
     op <- par(pty="s")
     on.exit(par(op))

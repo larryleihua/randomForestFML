@@ -8,7 +8,7 @@
   the function \code{prototype} in the \code{methods} package.
 }
 \usage{
-classCenter(x, label, prox, nNbr = min(table(label))-1) 
+classCenter(x, label, prox, nNbr = min(table(label))-1)
 }
 \arguments{
   \item{x}{a matrix or data frame}
@@ -35,11 +35,11 @@ classCenter(x, label, prox, nNbr = min(table(label))-1)
 }
 %\references{}
 \seealso{
-  \code{\link{randomForest}}, \code{\link{MDSplot}}
+  \code{\link{randomForestFML}}, \code{\link{MDSplot}}
 }
 \examples{
 data(iris)
-iris.rf <- randomForest(iris[,-5], iris[,5], prox=TRUE)
+iris.rf <- randomForestFML(iris[,-5], iris[,5], prox=TRUE)
 iris.p <- classCenter(iris[,-5], iris[,5], iris.rf$prox)
 plot(iris[,3], iris[,4], pch=21, xlab=names(iris)[3], ylab=names(iris)[4],
      bg=c("red", "blue", "green")[as.numeric(factor(iris$Species))],

@@ -1,9 +1,9 @@
 varUsed <- function(x, by.tree=FALSE, count=TRUE) {
-    if (!inherits(x, "randomForest"))
-        stop(deparse(substitute(x)), "is not a randomForest object")
+    if (!inherits(x, "randomForestFML"))
+        stop(deparse(substitute(x)), "is not a randomForestFML object")
     if (is.null(x$forest))
         stop(deparse(substitute(x)), "does not contain forest")
-    
+
     p <- length(x$forest$ncat)  # Total number of variables.
     if (count) {
         if (by.tree) {

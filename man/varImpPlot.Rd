@@ -6,11 +6,11 @@
 }
 \usage{
 varImpPlot(x, sort=TRUE, n.var=min(30, nrow(x$importance)),
-           type=NULL, class=NULL, scale=TRUE, 
-           main=deparse(substitute(x)), ...) 
+           type=NULL, class=NULL, scale=TRUE,
+           main=deparse(substitute(x)), ...)
 }
 \arguments{
-  \item{x}{An object of class \code{randomForest}.}
+  \item{x}{An object of class \code{randomForestFML}.}
   \item{sort}{Should the variables be sorted in decreasing order of
     importance?}
   \item{n.var}{How many variables to show? (Ignored if
@@ -25,12 +25,12 @@ varImpPlot(x, sort=TRUE, n.var=min(30, nrow(x$importance)),
   Invisibly, the importance of the variables that were plotted.
 }
 \seealso{
-  \code{\link{randomForest}}, \code{\link{importance}}
+  \code{\link{randomForestFML}}, \code{\link{importance}}
 }
 \examples{
 set.seed(4543)
 data(mtcars)
-mtcars.rf <- randomForest(mpg ~ ., data=mtcars, ntree=1000, keep.forest=FALSE,
+mtcars.rf <- randomForestFML(mpg ~ ., data=mtcars, ntree=1000, keep.forest=FALSE,
                           importance=TRUE)
 varImpPlot(mtcars.rf)
 }

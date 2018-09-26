@@ -3,8 +3,8 @@ combine <- function(...) {
    padm0 <- function(x, len) rbind(x, matrix(0, nrow=len-nrow(x),
                                              ncol=ncol(x)))
    rflist <- list(...)
-   areForest <- sapply(rflist, function(x) inherits(x, "randomForest")) 
-   if (any(!areForest)) stop("Argument must be a list of randomForest objects")
+   areForest <- sapply(rflist, function(x) inherits(x, "randomForestFML"))
+   if (any(!areForest)) stop("Argument must be a list of randomForestFML objects")
    ## Use the first component as a template
    rf <- rflist[[1]]
    classRF <- rf$type == "classification"
@@ -17,10 +17,10 @@ combine <- function(...) {
    vlist <- lapply(rflist, function(x) rownames(importance(x)))
    numvars <- sapply(vlist, length)
    if (! all(numvars[1] == numvars[-1]))
-       stop("Unequal number of predictor variables in the randomForest objects.")
+       stop("Unequal number of predictor variables in the randomForestFML objects.")
    for (i in seq_along(vlist)) {
        if (! all(vlist[[i]] == vlist[[1]]))
-           stop("Predictor variables are different in the randomForest objects.")
+           stop("Predictor variables are different in the randomForestFML objects.")
    }
    ## Combine the forest component, if any
    haveForest <- sapply(rflist, function(x) !is.null(x$forest))
@@ -64,9 +64,9 @@ combine <- function(...) {
    } else {
        rf$forest <- NULL
    }
-   
+
    if (classRF) {
-       ## Combine the votes matrix: 
+       ## Combine the votes matrix:
        rf$votes <- 0
        rf$oob.times <- 0
        areVotes <- all(sapply(rflist, function(x) any(x$votes > 1, na.rf=TRUE)))
@@ -78,7 +78,7 @@ combine <- function(...) {
            }
        } else {
            for(i in 1:nforest) {
-               rf$oob.times <- rf$oob.times + rflist[[i]]$oob.times            
+               rf$oob.times <- rf$oob.times + rflist[[i]]$oob.times
                rf$votes <- rf$votes +
                    ifelse(is.na(rflist[[i]]$votes), 0, rflist[[i]]$votes) *
                        rflist[[i]]$oob.times
@@ -113,7 +113,7 @@ combine <- function(...) {
            rf$test$predicted <- rf$test$predicted / ntree
        }
    }
-   
+
    ## If variable importance is in all of them, compute the average
    ## (weighted by the number of trees in each forest)
    have.imp <- !any(sapply(rflist, function(x) is.null(x$importance)))
@@ -141,7 +141,7 @@ combine <- function(...) {
            rf$localImportance <- rf$localImportance / ntree
        }
    }
-   
+
    ## If proximity is in all of them, compute the average
    ## (weighted by the number of trees in each forest)
    have.prox <- !any(sapply(rflist, function(x) is.null(x$proximity)))
@@ -151,7 +151,7 @@ combine <- function(...) {
            rf$proximity <- rf$proximity + rflist[[i]]$proximity * rflist[[i]]$ntree
        rf$proximity <- rf$proximity / ntree
    }
-   	
+
 	## if there are inbag matrices, combine them as well.
 	hasInBag <- all(sapply(rflist, function(x) !is.null(x$inbag)))
    	if (hasInBag) rf$inbag <- do.call(cbind, lapply(rflist, "[[", "inbag"))
@@ -166,6 +166,6 @@ combine <- function(...) {
    	} else {
     	rf$mse <- rf$rsq <- NULL
        	if (haveTest) rf$test$mse <- rf$test$rsq <- NULL
-   	}   
+   	}
    	rf
 }

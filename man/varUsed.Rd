@@ -8,7 +8,7 @@
 varUsed(x, by.tree=FALSE, count=TRUE)
 }
 \arguments{
-  \item{x}{An object of class \code{randomForest}.}
+  \item{x}{An object of class \code{randomForestFML}.}
   \item{by.tree}{Should the list of variables used be broken down by
     trees in the forest?}
   \item{count}{Should the frequencies that variables appear in trees be
@@ -26,12 +26,12 @@ varUsed(x, by.tree=FALSE, count=TRUE)
   variables used in the entire forest.
 }
 \seealso{
-\code{\link{randomForest}}
+\code{\link{randomForestFML}}
 }
 \examples{
 data(iris)
 set.seed(17)
-varUsed(randomForest(Species~., iris, ntree=100))
+varUsed(randomForestFML(Species~., iris, ntree=100))
 }
 \author{Andy Liaw}
 \keyword{tree}

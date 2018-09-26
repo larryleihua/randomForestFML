@@ -1,7 +1,7 @@
 ## mylevels() returns levels if given a factor, otherwise 0.
 mylevels <- function(x) if (is.factor(x)) levels(x) else 0
 
-"randomForest.default" <-
+"randomForestFML.default" <-
     function(x, y=NULL,  xtest=NULL, ytest=NULL, ntree=500,
              mtry=if (!is.null(y) && !is.factor(y))
              max(floor(ncol(x)/3), 1) else floor(sqrt(ncol(x))),
@@ -263,7 +263,7 @@ mylevels <- function(x) if (is.factor(x)) levels(x) else 0
                     inbag = if (keep.inbag)
                     matrix(integer(n * ntree), n) else integer(n),
                     #DUP=FALSE,
-                    PACKAGE="randomForest")[-1]
+                    PACKAGE="randomForestFML")[-1]
         if (keep.forest) {
             ## deal with the random forest outputs
             max.nodes <- max(rfout$ndbigtree)
@@ -303,7 +303,7 @@ mylevels <- function(x) if (is.factor(x)) levels(x) else 0
             }
         }
         cl <- match.call()
-        cl[[1]] <- as.name("randomForest")
+        cl[[1]] <- as.name("randomForestFML")
         out <- list(call = cl,
                     type = if (addclass) "unsupervised" else "classification",
                     predicted = if (addclass) NULL else out.class,
@@ -409,7 +409,7 @@ mylevels <- function(x) if (is.factor(x)) levels(x) else 0
                     inbag = if (keep.inbag)
                     matrix(integer(n * ntree), n) else integer(1),
                     #DUP=FALSE,
-                    PACKAGE="randomForest")[c(16:28, 36:41)]
+                    PACKAGE="randomForestFML")[c(16:28, 36:41)]
         ## Format the forest component, if present.
         if (keep.forest) {
             max.nodes <- max(rfout$ndbigtree)
@@ -427,7 +427,7 @@ mylevels <- function(x) if (is.factor(x)) levels(x) else 0
                 rfout$rightDaughter[1:max.nodes, , drop=FALSE]
         }
         cl <- match.call()
-        cl[[1]] <- as.name("randomForest")
+        cl[[1]] <- as.name("randomForestFML")
         ## Make sure those obs. that have not been OOB get NA as prediction.
         ypred <- rfout$ypred
         if (any(rfout$oob.times < 1)) {
@@ -476,6 +476,6 @@ mylevels <- function(x) if (is.factor(x)) levels(x) else 0
                     matrix(rfout$inbag, nrow(rfout$inbag),
                            dimnames=list(x.row.names, NULL)) else NULL)
     }
-    class(out) <- "randomForest"
+    class(out) <- "randomForestFML"
     return(out)
 }

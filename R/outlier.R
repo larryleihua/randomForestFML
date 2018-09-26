@@ -1,7 +1,7 @@
 outlier <- function(x, ...) UseMethod("outlier")
 
-outlier.randomForest <- function(x, ...) {
-    if (!inherits(x, "randomForest")) stop("x is not a randomForest object")
+outlier.randomForestFML <- function(x, ...) {
+    if (!inherits(x, "randomForestFML")) stop("x is not a randomForestFML object")
     if (x$type == "regression") stop("no outlier measure for regression")
     if (is.null(x$proximity)) stop("no proximity measures available")
     outlier.default(x$proximity, x$y)

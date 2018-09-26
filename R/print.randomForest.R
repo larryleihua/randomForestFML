@@ -1,4 +1,4 @@
-"print.randomForest" <-
+"print.randomForestFML" <-
 function(x, ...) {
   cat("\nCall:\n", deparse(x$call), "\n")
   cat("               Type of random forest: ", x$type, "\n", sep="")
@@ -30,7 +30,7 @@ function(x, ...) {
             round(x$test$mse[length(x$test$mse)], digits=2), "\n", sep="")
         cat("                    % Var explained: ",
             round(100*x$test$rsq[length(x$test$rsq)], digits=2), "\n", sep="")
-      }      
+      }
     }
     if (!is.null(x$coefs)) {
       cat("  Bias correction applied:\n")

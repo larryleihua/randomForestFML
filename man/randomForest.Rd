@@ -1,19 +1,19 @@
-\name{randomForest}
-\alias{randomForest}
-\alias{randomForest.formula}
-\alias{randomForest.default}
-\alias{print.randomForest}
+\name{randomForestFML}
+\alias{randomForestFML}
+\alias{randomForestFML.formula}
+\alias{randomForestFML.default}
+\alias{print.randomForestFML}
 
 \title{Classification and Regression with Random Forest}
 \description{
-  \code{randomForest} implements Breiman's random forest algorithm (based on
+  \code{randomForestFML} implements Breiman's random forest algorithm (based on
   Breiman and Cutler's original Fortran code) for classification and
   regression.  It can also be used in unsupervised mode for assessing
   proximities among data points.
 }
 \usage{
-\method{randomForest}{formula}(formula, data=NULL, ..., subset, na.action=na.fail)
-\method{randomForest}{default}(x, y=NULL,  xtest=NULL, ytest=NULL, ntree=500,
+\method{randomForestFML}{formula}(formula, data=NULL, ..., subset, na.action=na.fail)
+\method{randomForestFML}{default}(x, y=NULL,  xtest=NULL, ytest=NULL, ntree=500,
              mtry=if (!is.null(y) && !is.factor(y))
              max(floor(ncol(x)/3), 1) else floor(sqrt(ncol(x))),
              replace=TRUE, classwt=NULL, cutoff, strata,
@@ -25,21 +25,21 @@
              norm.votes=TRUE, do.trace=FALSE,
              keep.forest=!is.null(y) && is.null(xtest), corr.bias=FALSE,
              keep.inbag=FALSE, ...)
-\method{print}{randomForest}(x, ...)
+\method{print}{randomForestFML}(x, ...)
 }
 \arguments{
   \item{data}{an optional data frame containing the variables in the model.
     By default the variables are taken from the environment which
-    \code{randomForest} is called from.}
+    \code{randomForestFML} is called from.}
   \item{subset}{an index vector indicating which rows should be used.
     (NOTE: If given, this argument must be named.)}
   \item{na.action}{A function to specify the action to be taken if NAs
     are found.  (NOTE: If given, this argument must be named.)}
   \item{x, formula}{a data frame or a matrix of predictors, or a formula
     describing the model to be fitted (for the
-    \code{print} method, an \code{randomForest} object).}
+    \code{print} method, an \code{randomForestFML} object).}
   \item{y}{A response vector.  If a factor, classification is assumed,
-    otherwise regression is assumed.  If omitted, \code{randomForest}
+    otherwise regression is assumed.  If omitted, \code{randomForestFML}
     will run in unsupervised mode.}
   \item{xtest}{a data frame or matrix (like \code{x}) containing
     predictors for the test set.}
@@ -89,7 +89,7 @@
     returned (useful for combining results from different runs).
     Ignored for regression.}
   \item{do.trace}{If set to \code{TRUE}, give a more verbose output as
-    \code{randomForest} is run.  If set to some integer, then running
+    \code{randomForestFML} is run.  If set to some integer, then running
     output is printed for every \code{do.trace} trees.}
   \item{keep.forest}{If set to \code{FALSE}, the forest will not be
     retained in the output object.  If \code{xtest} is given, defaults
@@ -100,14 +100,14 @@
     returned that keeps track of which samples are ``in-bag'' in which
     trees (but not how many times, if sampling with replacement)}
   \item{...}{optional parameters to be passed to the low level function
-    \code{randomForest.default}.}
+    \code{randomForestFML.default}.}
 }
 
 \value{
-  An object of class \code{randomForest}, which is a list with the
+  An object of class \code{randomForestFML}, which is a list with the
   following components:
 
-  \item{call}{the original call to \code{randomForest}}
+  \item{call}{the original call to \code{randomForestFML}}
   \item{type}{one of \code{regression}, \code{classification}, or
     \code{unsupervised}.}
   \item{predicted}{the predicted values of the input data based on
@@ -131,7 +131,7 @@
   \item{ntree}{number of trees grown.}
   \item{mtry}{number of predictors sampled for spliting at each node.}
   \item{forest}{(a list that contains the entire forest; \code{NULL} if
-    \code{randomForest} is run in unsupervised mode or if
+    \code{randomForestFML} is run in unsupervised mode or if
     \code{keep.forest=FALSE}.}
   \item{err.rate}{(classification only) vector error rates of the
     prediction on the input data, the i-th element being the (OOB) error rate
@@ -144,7 +144,7 @@
   \item{oob.times}{number of times cases are `out-of-bag' (and thus used
     in computing OOB error estimate)}
   \item{proximity}{if \code{proximity=TRUE} when
-    \code{randomForest} is called, a matrix of proximity measures among
+    \code{randomForestFML} is called, a matrix of proximity measures among
     the input (based on the frequency that pairs of data points are in
     the same terminal nodes).}
 
@@ -172,14 +172,14 @@
   \code{do.trace} is set to some positive integer, then for every
   \code{do.trace} trees, the test set error is printed.  Results for the
   test set is returned in the \code{test} component of the resulting
-  \code{randomForest} object.  For classification, the \code{votes}
+  \code{randomForestFML} object.  For classification, the \code{votes}
   component (for training or test set data) contain the votes the cases
   received for the classes.  If \code{norm.votes=TRUE}, the fraction is
   given, which can be taken as predicted probabilities for the classes.
 
 
   For large data sets, especially those with large number of variables,
-  calling \code{randomForest} via the formula interface is not advised:
+  calling \code{randomForestFML} via the formula interface is not advised:
   There may be too much overhead in handling the formula.
 
   The ``local'' (or casewise) variable importance is computed as
@@ -200,13 +200,13 @@
   \email{matthew\_wiener@merck.com}, based on original Fortran code by
   Leo Breiman and Adele Cutler.}
 
-\seealso{\code{\link{predict.randomForest}}, \code{\link{varImpPlot}}}
+\seealso{\code{\link{predict.randomForestFML}}, \code{\link{varImpPlot}}}
 
 \examples{
 ## Classification:
 ##data(iris)
 set.seed(71)
-iris.rf <- randomForest(Species ~ ., data=iris, importance=TRUE,
+iris.rf <- randomForestFML(Species ~ ., data=iris, importance=TRUE,
                         proximity=TRUE)
 print(iris.rf)
 ## Look at variable importance:
@@ -216,23 +216,23 @@ iris.mds <- cmdscale(1 - iris.rf$proximity, eig=TRUE)
 op <- par(pty="s")
 pairs(cbind(iris[,1:4], iris.mds$points), cex=0.6, gap=0,
       col=c("red", "green", "blue")[as.numeric(iris$Species)],
-      main="Iris Data: Predictors and MDS of Proximity Based on RandomForest")
+      main="Iris Data: Predictors and MDS of Proximity Based on randomForestFML")
 par(op)
 print(iris.mds$GOF)
 
 ## The `unsupervised' case:
 set.seed(17)
-iris.urf <- randomForest(iris[, -5])
+iris.urf <- randomForestFML(iris[, -5])
 MDSplot(iris.urf, iris$Species)
 
 ## stratified sampling: draw 20, 30, and 20 of the species to grow each tree.
-(iris.rf2 <- randomForest(iris[1:4], iris$Species, 
+(iris.rf2 <- randomForestFML(iris[1:4], iris$Species,
                           sampsize=c(20, 30, 20)))
 
 ## Regression:
 ## data(airquality)
 set.seed(131)
-ozone.rf <- randomForest(Ozone ~ ., data=airquality, mtry=3,
+ozone.rf <- randomForestFML(Ozone ~ ., data=airquality, mtry=3,
                          importance=TRUE, na.action=na.omit)
 print(ozone.rf)
 ## Show "importance" of variables: higher value mean more important:
@@ -242,23 +242,23 @@ round(importance(ozone.rf), 2)
 set.seed(17)
 x <- matrix(runif(5e2), 100)
 y <- gl(2, 50)
-(myrf <- randomForest(x, y))
+(myrf <- randomForestFML(x, y))
 (predict(myrf, x))
 
 ## "complicated" formula:
-(swiss.rf <- randomForest(sqrt(Fertility) ~ . - Catholic + I(Catholic < 50),
+(swiss.rf <- randomForestFML(sqrt(Fertility) ~ . - Catholic + I(Catholic < 50),
                           data=swiss))
 (predict(swiss.rf, swiss))
 ## Test use of 32-level factor as a predictor:
 set.seed(1)
 x <- data.frame(x1=gl(53, 10), x2=runif(530), y=rnorm(530))
-(rf1 <- randomForest(x[-3], x[[3]], ntree=10))
+(rf1 <- randomForestFML(x[-3], x[[3]], ntree=10))
 
 ## Grow no more than 4 nodes per tree:
-(treesize(randomForest(Species ~ ., data=iris, maxnodes=4, ntree=30)))
+(treesize(randomForestFML(Species ~ ., data=iris, maxnodes=4, ntree=30)))
 
 ## test proximity in regression
-iris.rrf <- randomForest(iris[-1], iris[[1]], ntree=101, proximity=TRUE, oob.prox=FALSE)
+iris.rrf <- randomForestFML(iris[-1], iris[[1]], ntree=101, proximity=TRUE, oob.prox=FALSE)
 str(iris.rrf$proximity)
 }
 \keyword{classif}% at least one, from doc/KEYWORDS

@@ -4,10 +4,10 @@ tuneRF <- function(x, y, mtryStart=if(is.factor(y)) floor(sqrt(ncol(x))) else
   if (improve < 0) stop ("improve must be non-negative.")
   classRF <- is.factor(y)
   errorOld <- if (classRF) {
-    randomForest(x, y, mtry=mtryStart, ntree=ntreeTry,
+    randomForestFML(x, y, mtry=mtryStart, ntree=ntreeTry,
                  keep.forest=FALSE, ...)$err.rate[ntreeTry,1]
   } else {
-    randomForest(x, y, mtry=mtryStart, ntree=ntreeTry,
+    randomForestFML(x, y, mtry=mtryStart, ntree=ntreeTry,
                  keep.forest=FALSE, ...)$mse[ntreeTry]
   }
   if (errorOld < 0) stop("Initial setting gave 0 error and no room for improvement.")
@@ -19,8 +19,8 @@ tuneRF <- function(x, y, mtryStart=if(is.factor(y)) floor(sqrt(ncol(x))) else
 
   oobError <- list()
   oobError[[1]] <- errorOld
-  names(oobError)[1] <- mtryStart  
-  
+  names(oobError)[1] <- mtryStart
+
   for (direction in c("left", "right")) {
     if (trace) cat("Searching", direction, "...\n")
     Improve <- 1.1*improve
@@ -35,10 +35,10 @@ tuneRF <- function(x, y, mtryStart=if(is.factor(y)) floor(sqrt(ncol(x))) else
       }
       if (mtryCur == mtryOld) break
       errorCur <- if (classRF) {
-        randomForest(x, y, mtry=mtryCur, ntree=ntreeTry,
+        randomForestFML(x, y, mtry=mtryCur, ntree=ntreeTry,
                      keep.forest=FALSE, ...)$err.rate[ntreeTry,"OOB"]
       } else {
-        randomForest(x, y, mtry=mtryCur, ntree=ntreeTry,
+        randomForestFML(x, y, mtry=mtryCur, ntree=ntreeTry,
                      keep.forest=FALSE, ...)$mse[ntreeTry]
       }
       if (trace) {
@@ -65,8 +65,8 @@ tuneRF <- function(x, y, mtryStart=if(is.factor(y)) floor(sqrt(ncol(x))) else
     axis(1, at=res[,"mtry"])
   }
 
-  if (doBest) 
-    res <- randomForest(x, y, mtry=res[which.min(res[,2]), 1], ...)
-  
+  if (doBest)
+    res <- randomForestFML(x, y, mtry=res[which.min(res[,2]), 1], ...)
+
   res
 }

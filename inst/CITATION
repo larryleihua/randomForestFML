@@ -1,7 +1,7 @@
-citHeader("To cite randomForest in publications use:")
+citHeader("To cite randomForestFML in publications use:")
 
 citEntry(entry="Article",
-         title = "Classification and Regression by randomForest",
+         title = "Classification and Regression by randomForestFML",
          author = personList(person(family="Liaw", given="Andy"),
 	                     person(family="Wiener", given="Matthew")),
 	 journal = "R News",
@@ -13,6 +13,6 @@ citEntry(entry="Article",
 
          textVersion =
          paste("A. Liaw and M. Wiener (2002). ",
-               "Classification and Regression by randomForest. ",
+               "Classification and Regression by randomForestFML. ",
                "R News 2(3), 18--22.",
                sep=""))

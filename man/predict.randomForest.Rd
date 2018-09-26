@@ -1,17 +1,17 @@
-\name{predict.randomForest}
-\alias{predict.randomForest}
+\name{predict.randomForestFML}
+\alias{predict.randomForestFML}
 \title{predict method for random forest objects}
 \description{
   Prediction of test data using random forest.
 }
 \usage{
-\method{predict}{randomForest}(object, newdata, type="response",
+\method{predict}{randomForestFML}(object, newdata, type="response",
   norm.votes=TRUE, predict.all=FALSE, proximity=FALSE, nodes=FALSE,
   cutoff, ...)
 }
 \arguments{
-  \item{object}{an object of class \code{randomForest}, as that
-    created by the function \code{randomForest}.}
+  \item{object}{an object of class \code{randomForestFML}, as that
+    created by the function \code{randomForestFML}.}
   \item{newdata}{a data frame or matrix containing new data.  (Note: If
     not given, the out-of-bag prediction in \code{object} is returned.}
   \item{type}{one of \code{response}, \code{prob}. or \code{votes},
@@ -32,7 +32,7 @@
     one with the maximum ratio of proportion of votes to cutoff.
     Default is taken from the \code{forest$cutoff} component of
     \code{object} (i.e., the setting used when running
-    \code{\link{randomForest}}).}
+    \code{\link{randomForestFML}}).}
   \item{...}{not used currently.}
 }
 
@@ -66,14 +66,14 @@ If \code{nodes=TRUE}, the returned object has a ``nodes'' attribute,
 which is an n by ntree matrix, each column containing the node number
 that the cases fall in for that tree.
 
-NOTE: If the \code{object} inherits from \code{randomForest.formula},
+NOTE: If the \code{object} inherits from \code{randomForestFML.formula},
 then any data with \code{NA} are silently omitted from the prediction.
 The returned value will contain \code{NA} correspondingly in the
 aggregated and individual tree predictions (if requested), but not in
 the proximity or node matrices.
 
 NOTE2: Any ties are broken at random, so if this is undesirable, avoid it by
-using odd number \code{ntree} in \code{randomForest()}.
+using odd number \code{ntree} in \code{randomForestFML()}.
 }
 \references{
   Breiman, L. (2001), \emph{Random Forests}, Machine Learning 45(1),
@@ -83,13 +83,13 @@ using odd number \code{ntree} in \code{randomForest()}.
   \email{matthew\_wiener@merck.com}, based on original Fortran code by
   Leo Breiman and Adele Cutler.}
 
-\seealso{\code{\link{randomForest}}}
+\seealso{\code{\link{randomForestFML}}}
 
 \examples{
 data(iris)
 set.seed(111)
 ind <- sample(2, nrow(iris), replace = TRUE, prob=c(0.8, 0.2))
-iris.rf <- randomForest(Species ~ ., data=iris[ind == 1,])
+iris.rf <- randomForestFML(Species ~ ., data=iris[ind == 1,])
 iris.pred <- predict(iris.rf, iris[ind == 2,])
 table(observed = iris[ind==2, "Species"], predicted = iris.pred)
 ## Get prediction for all trees.

@@ -12,7 +12,7 @@ treesize(x, terminal=TRUE)
 }
 
 \arguments{
-  \item{x}{an object of class \code{randomForest}, which contains a
+  \item{x}{an object of class \code{randomForestFML}, which contains a
     \code{forest} component.}
   \item{terminal}{count terminal nodes only (\code{TRUE}) or all nodes
     (\code{FALSE}}
@@ -20,22 +20,22 @@ treesize(x, terminal=TRUE)
 
 \value{
 A vector containing number of nodes for the trees in the
-\code{randomForest} object.
+\code{randomForestFML} object.
 }
 
 \note{
-  The \code{randomForest} object must contain the \code{forest}
-  component; i.e., created with \code{randomForest(...,
-    keep.forest=TRUE)}. 
+  The \code{randomForestFML} object must contain the \code{forest}
+  component; i.e., created with \code{randomForestFML(...,
+    keep.forest=TRUE)}.
 }
 
-\seealso{\code{\link{randomForest}}}
+\seealso{\code{\link{randomForestFML}}}
 
 \author{Andy Liaw \email{andy\_liaw@merck.com}}
 
 \examples{
 data(iris)
-iris.rf <- randomForest(Species ~ ., iris)
+iris.rf <- randomForestFML(Species ~ ., iris)
 hist(treesize(iris.rf))
 }
 

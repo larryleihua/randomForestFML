@@ -1,9 +1,9 @@
 varImpPlot <- function(x, sort=TRUE,
                        n.var=min(30, nrow(x$importance)),
-                       type=NULL, class=NULL, scale=TRUE, 
+                       type=NULL, class=NULL, scale=TRUE,
                        main=deparse(substitute(x)), ...) {
-    if (!inherits(x, "randomForest"))
-        stop("This function only works for objects of class `randomForest'")
+    if (!inherits(x, "randomForestFML"))
+        stop("This function only works for objects of class `randomForestFML'")
     imp <- importance(x, class=class, scale=scale, type=type, ...)
     ## If there are more than two columns, just use the last two columns.
     if (ncol(imp) > 2) imp <- imp[, -(1:(ncol(imp) - 2))]

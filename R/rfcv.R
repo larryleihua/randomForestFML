@@ -32,7 +32,7 @@ rfcv <- function(trainx, trainy, cv.fold=5, scale="log", step=0.5,
 
     for (i in 1:cv.fold) {
         ## cat(".")
-        all.rf <- randomForest(trainx[idx != i, , drop=FALSE],
+        all.rf <- randomForestFML(trainx[idx != i, , drop=FALSE],
                                trainy[idx != i],
                                trainx[idx == i, , drop=FALSE],
                                trainy[idx == i],
@@ -42,7 +42,7 @@ rfcv <- function(trainx, trainy, cv.fold=5, scale="log", step=0.5,
         for (j in 2:k) {
             imp.idx <- impvar[1:n.var[j]]
             sub.rf <-
-                randomForest(trainx[idx != i, imp.idx, drop=FALSE],
+                randomForestFML(trainx[idx != i, imp.idx, drop=FALSE],
                              trainy[idx != i],
                              trainx[idx == i, imp.idx, drop=FALSE],
                              trainy[idx == i],

@@ -3,7 +3,7 @@ partialPlot <- function(x, ...) UseMethod("partialPlot")
 partialPlot.default <- function(x, ...)
     stop("partial dependence plot not implemented for this class of objects.\n")
 
-partialPlot.randomForest <-
+partialPlot.randomForestFML <-
     function (x, pred.data, x.var, which.class, w, plot=TRUE, add=FALSE,
               n.pt = min(length(unique(pred.data[, xname])), 51), rug = TRUE,
               xlab=deparse(substitute(x.var)), ylab="",
@@ -12,7 +12,7 @@ partialPlot.randomForest <-
 {
     classRF <- x$type != "regression"
     if (is.null(x$forest))
-        stop("The randomForest object must contain the forest.\n")
+        stop("The randomForestFML object must contain the forest.\n")
     x.var <- substitute(x.var)
     xname <- if (is.character(x.var)) x.var else {
         if (is.name(x.var)) deparse(x.var) else {

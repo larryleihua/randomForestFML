@@ -3,13 +3,13 @@
 \title{Extract a single tree from a forest.}
 \description{
   This function extract the structure of a tree from a
-  \code{randomForest} object.
+  \code{randomForestFML} object.
 }
 \usage{
 getTree(rfobj, k=1, labelVar=FALSE)
 }
 \arguments{
-  \item{rfobj}{a \code{\link{randomForest}} object.}
+  \item{rfobj}{a \code{\link{randomForestFML}} object.}
   \item{k}{which tree to extract?}
   \item{labelVar}{Should better labels be used for splitting variables
     and predicted class?}
@@ -45,12 +45,12 @@ getTree(rfobj, k=1, labelVar=FALSE)
 %\references{
 %}
 \seealso{
-  \code{\link{randomForest}}
+  \code{\link{randomForestFML}}
 }
 \examples{
 data(iris)
 ## Look at the third trees in the forest.
-getTree(randomForest(iris[,-5], iris[,5], ntree=10), 3, labelVar=TRUE)
+getTree(randomForestFML(iris[,-5], iris[,5], ntree=10), 3, labelVar=TRUE)
 }
 \author{Andy Liaw \email{andy\_liaw@merck.com}}
 \keyword{tree}

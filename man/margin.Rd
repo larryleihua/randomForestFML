@@ -1,19 +1,19 @@
 \name{margin}
 \alias{margin}
 \alias{margin.default}
-\alias{margin.randomForest}
+\alias{margin.randomForestFML}
 \alias{plot.margin}
-\title{Margins of randomForest Classifier}
+\title{Margins of randomForestFML Classifier}
 \description{
-  Compute or plot the margin of predictions from a randomForest classifier.
+  Compute or plot the margin of predictions from a randomForestFML classifier.
 }
 \usage{
-\method{margin}{randomForest}(x, ...)
+\method{margin}{randomForestFML}(x, ...)
 \method{margin}{default}(x, observed, ...)
 \method{plot}{margin}(x, sort=TRUE, ...)
 }
 \arguments{
-  \item{x}{an object of class \code{\link{randomForest}}, whose
+  \item{x}{an object of class \code{\link{randomForestFML}}, whose
     \code{type} is not \code{regression}, or a matrix of predicted
 	probabilities, one column per class and one row per observation.
 	For the \code{plot} method, \code{x} should be an object returned by
@@ -24,7 +24,7 @@
 }
 \value{
   For \code{margin}, the \emph{margin} of observations from the
-  \code{\link{randomForest}} classifier (or whatever classifier that
+  \code{\link{randomForestFML}} classifier (or whatever classifier that
   produced the predicted probability matrix given to \code{margin}).
   The margin of a data point is defined as the proportion of votes for
   the correct class minus maximum proportion of votes for the other
@@ -32,12 +32,12 @@
   classification, and vice versa.
 }
 \seealso{
-  \code{\link{randomForest}}
+  \code{\link{randomForestFML}}
 }
 \examples{
 set.seed(1)
 data(iris)
-iris.rf <- randomForest(Species ~ ., iris, keep.forest=FALSE)
+iris.rf <- randomForestFML(Species ~ ., iris, keep.forest=FALSE)
 plot(margin(iris.rf))
 }
 \author{Robert Gentlemen, with slight modifications by Andy Liaw}

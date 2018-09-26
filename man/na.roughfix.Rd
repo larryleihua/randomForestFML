@@ -18,7 +18,7 @@ na.roughfix(object, ...)
   \code{NA}s are replaced with column medians.  For factor variables,
   \code{NA}s are replaced with the most frequent levels (breaking ties
   at random).  If \code{object} contains no \code{NA}s, it is returned
-  unaltered. 
+  unaltered.
 }
 \note{
   This is used as a starting point for imputing missing values by random
@@ -27,7 +27,7 @@ na.roughfix(object, ...)
 %\references{
 %}
 \seealso{
-\code{\link{rfImpute}}, \code{\link{randomForest}}.
+\code{\link{rfImpute}}, \code{\link{randomForestFML}}.
 }
 \examples{
 data(iris)
@@ -36,7 +36,7 @@ set.seed(111)
 ## artificially drop some data values.
 for (i in 1:4) iris.na[sample(150, sample(20)), i] <- NA
 iris.roughfix <- na.roughfix(iris.na)
-iris.narf <- randomForest(Species ~ ., iris.na, na.action=na.roughfix)
+iris.narf <- randomForestFML(Species ~ ., iris.na, na.action=na.roughfix)
 print(iris.narf)
 }
 \author{Andy Liaw}

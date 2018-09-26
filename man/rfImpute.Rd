@@ -2,9 +2,9 @@
 \alias{rfImpute}
 \alias{rfImpute.formula}
 \alias{rfImpute.default}
-\title{Missing Value Imputations by randomForest}
+\title{Missing Value Imputations by randomForestFML}
 \description{
-  Impute missing values in predictor data using proximity from randomForest.
+  Impute missing values in predictor data using proximity from randomForestFML.
 }
 \usage{
 \method{rfImpute}{default}(x, y, iter=5, ntree=300, ...)
@@ -17,20 +17,20 @@
   \item{data}{A data frame containing the predictors and response.}
   \item{iter}{Number of iterations to run the imputation.}
   \item{ntree}{Number of trees to grow in each iteration of
-    randomForest.}
+    randomForestFML.}
   \item{...}{Other arguments to be passed to
-    \code{\link{randomForest}}.}
+    \code{\link{randomForestFML}}.}
   \item{subset}{A logical vector indicating which observations to use.}
 }
 \value{
   A data frame or matrix containing the completed data matrix, where
-  \code{NA}s are imputed using proximity from randomForest.  The first
+  \code{NA}s are imputed using proximity from randomForestFML.  The first
   column contains the response.
 }
 \details{
   The algorithm starts by imputing \code{NA}s using
-  \code{\link{na.roughfix}}.  Then \code{\link{randomForest}} is called
-  with the completed data.  The proximity matrix from the randomForest
+  \code{\link{na.roughfix}}.  Then \code{\link{randomForestFML}} is called
+  with the completed data.  The proximity matrix from the randomForestFML
   is used to update the imputation of the \code{NA}s.  For continuous
   predictors, the imputed value is the weighted average of the
   non-missing obervations, where the weights are the proximities.  For
@@ -40,7 +40,7 @@
 
   Note: Imputation has not (yet) been implemented for the unsupervised
   case.  Also, Breiman (2003) notes that the OOB estimate of error from
-  randomForest tend to be optimistic when run on the data matrix with
+  randomForestFML tend to be optimistic when run on the data matrix with
   imputed values.
 }
 \references{
@@ -60,7 +60,7 @@ for (i in 1:4) iris.na[sample(150, sample(20)), i] <- NA
 set.seed(222)
 iris.imputed <- rfImpute(Species ~ ., iris.na)
 set.seed(333)
-iris.rf <- randomForest(Species ~ ., iris.imputed)
+iris.rf <- randomForestFML(Species ~ ., iris.imputed)
 print(iris.rf)
 }
 \author{Andy Liaw}

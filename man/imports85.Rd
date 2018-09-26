@@ -38,15 +38,15 @@ data(imports85)
 \references{
   1985 Model Import Car and Truck Specifications, 1985 Ward's Automotive
   Yearbook.
-  
+
   Personal Auto Manuals, Insurance Services Office,
-  160 Water Street, New York, NY 10038 
+  160 Water Street, New York, NY 10038
 
   Insurance Collision Report, Insurance Institute for Highway Safety,
   Watergate 600, Washington, DC 20037
 }
 \seealso{
-  \code{\link{randomForest}}
+  \code{\link{randomForestFML}}
 }
 \examples{
 data(imports85)
@@ -55,10 +55,10 @@ imp85 <- imp85[complete.cases(imp85), ]
 ## Drop empty levels for factors.
 imp85[] <- lapply(imp85, function(x) if (is.factor(x)) x[, drop=TRUE] else x)
 
-stopifnot(require(randomForest))
-price.rf <- randomForest(price ~ ., imp85, do.trace=10, ntree=100)
+stopifnot(require(randomForestFML))
+price.rf <- randomForestFML(price ~ ., imp85, do.trace=10, ntree=100)
 print(price.rf)
-numDoors.rf <- randomForest(numOfDoors ~ ., imp85, do.trace=10, ntree=100)
+numDoors.rf <- randomForestFML(numOfDoors ~ ., imp85, do.trace=10, ntree=100)
 print(numDoors.rf)
 }
 \author{Andy Liaw}

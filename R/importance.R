@@ -3,10 +3,10 @@ importance <- function(x, ...)  UseMethod("importance")
 importance.default <- function(x, ...)
     stop("No method implemented for this class of object")
 
-importance.randomForest <- function(x, type=NULL, class=NULL, scale=TRUE,
+importance.randomForestFML <- function(x, type=NULL, class=NULL, scale=TRUE,
                                     ...) {
-    if (!inherits(x, "randomForest"))
-        stop("x is not of class randomForest")
+    if (!inherits(x, "randomForestFML"))
+        stop("x is not of class randomForestFML")
     classRF <- x$type != "regression"
     hasImp <- !is.null(dim(x$importance)) || ncol(x$importance) == 1
     hasType <- !is.null(type)
@@ -18,7 +18,7 @@ importance.randomForest <- function(x, type=NULL, class=NULL, scale=TRUE,
         if (type == 2 && !is.null(class))
             stop("No class-specific measure for that type")
     }
-    
+
     imp <- x$importance
     if (hasType && type == 2) {
         if (hasImp) imp <- imp[, ncol(imp), drop=FALSE]

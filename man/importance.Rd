@@ -1,17 +1,17 @@
 \name{importance}
 \alias{importance}
 \alias{importance.default}
-\alias{importance.randomForest}
+\alias{importance.randomForestFML}
 \title{Extract variable importance measure}
 \description{
   This is the extractor function for variable importance measures as
-  produced by \code{\link{randomForest}}.
+  produced by \code{\link{randomForestFML}}.
 }
 \usage{
-\method{importance}{randomForest}(x, type=NULL, class=NULL, scale=TRUE, ...)
+\method{importance}{randomForestFML}(x, type=NULL, class=NULL, scale=TRUE, ...)
 }
 \arguments{
-  \item{x}{an object of class \code{\link{randomForest}}}.
+  \item{x}{an object of class \code{\link{randomForestFML}}}.
   \item{type}{either 1 or 2, specifying the type of importance measure
     (1=mean decrease in accuracy, 2=mean decrease in node impurity).}
   \item{class}{for classification problem, which class-specific measure
@@ -44,12 +44,12 @@
 %\references{
 %}
 \seealso{
-  \code{\link{randomForest}}, \code{\link{varImpPlot}}
+  \code{\link{randomForestFML}}, \code{\link{varImpPlot}}
 }
 \examples{
 set.seed(4543)
 data(mtcars)
-mtcars.rf <- randomForest(mpg ~ ., data=mtcars, ntree=1000,
+mtcars.rf <- randomForestFML(mpg ~ ., data=mtcars, ntree=1000,
                           keep.forest=FALSE, importance=TRUE)
 importance(mtcars.rf)
 importance(mtcars.rf, type=1)
@@ -58,4 +58,3 @@ importance(mtcars.rf, type=1)
 \keyword{regression}
 \keyword{classif}
 \keyword{tree}
-

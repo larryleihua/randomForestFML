@@ -1,9 +1,9 @@
-"predict.randomForest" <-
+"predict.randomForestFML" <-
     function (object, newdata, type = "response", norm.votes = TRUE,
               predict.all=FALSE, proximity = FALSE, nodes=FALSE, cutoff, ...)
 {
-    if (!inherits(object, "randomForest"))
-        stop("object not of class randomForest")
+    if (!inherits(object, "randomForestFML"))
+        stop("object not of class randomForestFML")
     if (is.null(object$forest)) stop("No forest component in the object")
     out.type <- charmatch(tolower(type),
                           c("response", "prob", "vote", "class"))
@@ -59,7 +59,7 @@
     if (object$type == "unsupervised")
         stop("Can't predict unsupervised forest.")
 
-    if (inherits(object, "randomForest.formula")) {
+    if (inherits(object, "randomForestFML.formula")) {
         newdata <- as.data.frame(newdata)
         rn <- row.names(newdata)
         Terms <- delete.response(object$terms)
@@ -185,7 +185,7 @@
                   nodes = as.integer(nodes),
                   nodexts = as.integer(nodexts),
                   #DUP=FALSE,
-                  PACKAGE = "randomForest")[keepIndex]
+                  PACKAGE = "randomForestFML")[keepIndex]
             ## Apply bias correction if needed.
             yhat <- rep(NA, length(rn))
             names(yhat) <- rn
@@ -240,7 +240,7 @@
                  proxmatrix = as.double(proxmatrix),
                  nodes = as.integer(nodes),
                  #DUP=FALSE,
-                 PACKAGE = "randomForest")
+                 PACKAGE = "randomForestFML")
         if (out.type > 1) {
             out.class.votes <- t(matrix(t1$countts, nrow = nclass, ncol = ntest))
             if (norm.votes)
