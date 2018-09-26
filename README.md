@@ -47,8 +47,7 @@ bag <- randomForestFML(Y ~ C+V, data = trainSet, mtry = 2, importance = TRUE, nt
 ```
 
 ## To do
-__The most urgent todo is to implement a function for generating SB in the C function (rf.c)__
-
+__The most urgent todo is to implement a function for generating SB for the C functions (rf.c and regrf.c in src/)__
 
 
 ## R codes
