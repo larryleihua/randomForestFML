@@ -298,7 +298,8 @@ void classRF(double *x, int *dimx, int *cl, int *ncl, int *cat, int *maxcat,
               tclasspop[cl[k] - 1] += classwt[cl[k]-1];
               win[k] += classwt[cl[k]-1];
               jin[k] += 1;
-          } else {
+            }
+          }else {
             if (replace) {
               for (n = 0; n < *sampsize; ++n) {
                 k = unif_rand() * nsample;
