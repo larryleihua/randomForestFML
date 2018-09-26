@@ -28,7 +28,7 @@ void regRF(double *x, double *y, int *xdim, int *sampsize,
            double *upper, double *mse, int *keepf, int *replace,
            int *testdat, double *xts, int *nts, double *yts, int *labelts,
            double *yTestPred, double *proxts, double *msets, double *coef,
-           int *nout, int *inbag) {
+           int *nout, int *inbag, int *sbvec) {
     /*************************************************************************
    Input:
    mdim=number of variables in data set
@@ -54,7 +54,7 @@ void regRF(double *x, double *y, int *xdim, int *sampsize,
 
     double *yb, *xtmp, *xb, *ytr, *ytree, *tgini;
 
-    int k, m, mr, n, nOOB, j, jout, idx, ntest, last, ktmp, nPerm,
+    int k, tmp_k, m, mr, n, nOOB, j, jout, idx, ntest, last, ktmp, nPerm,
         nsample, mdim, keepF, keepInbag;
     int *oobpair, varImp, localImp, *varUsed;
 
@@ -145,32 +145,47 @@ void regRF(double *x, double *y, int *xdim, int *sampsize,
 		idx = keepF ? j * *nrnodes : 0;
 		zeroInt(in, nsample);
         zeroInt(varUsed, mdim);
-        /* Draw a random sample for growing a tree. */
-		if (*replace) { /* sampling with replacement */
-			for (n = 0; n < *sampsize; ++n) {
-				xrand = unif_rand();
-				k = xrand * nsample;
-				in[k] += 1;
-				yb[n] = y[k];
-				for(m = 0; m < mdim; ++m) {
-					xb[m + n * mdim] = x[m + k * mdim];
+
+		if (sbvec[0]) { /* sequential bootstrap */
+			 for (n = 0; n < nsample; ++n) {
+				 tmp_k = j*nsample+n;
+				 k = sbvec[tmp_k]-1;
+				 in[k] += 1;
+				 yb[n] = y[k];
+				 for(m = 0; m < mdim; ++m) {
+					 xb[m + n * mdim] = x[m + k * mdim];
+				 }
+			 }
+		}else {
+			    /* Draw a random sample for growing a tree. */
+			if (*replace) { /* sampling with replacement */
+				for (n = 0; n < *sampsize; ++n) {
+					xrand = unif_rand();
+					k = xrand * nsample;
+					in[k] += 1;
+					yb[n] = y[k];
+					for(m = 0; m < mdim; ++m) {
+						xb[m + n * mdim] = x[m + k * mdim];
+					}
 				}
-			}
-		} else { /* sampling w/o replacement */
-			for (n = 0; n < nsample; ++n) nind[n] = n;
-			last = nsample - 1;
-			for (n = 0; n < *sampsize; ++n) {
-				ktmp = (int) (unif_rand() * (last+1));
-                k = nind[ktmp];
-                swapInt(nind[ktmp], nind[last]);
-				last--;
-				in[k] += 1;
-				yb[n] = y[k];
-				for(m = 0; m < mdim; ++m) {
-					xb[m + n * mdim] = x[m + k * mdim];
+			} else { /* sampling w/o replacement */
+				for (n = 0; n < nsample; ++n) nind[n] = n;
+				last = nsample - 1;
+				for (n = 0; n < *sampsize; ++n) {
+					ktmp = (int) (unif_rand() * (last+1));
+	                k = nind[ktmp];
+	                swapInt(nind[ktmp], nind[last]);
+					last--;
+					in[k] += 1;
+					yb[n] = y[k];
+					for(m = 0; m < mdim; ++m) {
+						xb[m + n * mdim] = x[m + k * mdim];
+					}
 				}
 			}
 		}
+
+
 		if (keepInbag) {
 			for (n = 0; n < nsample; ++n) inbag[n + j * nsample] = in[n];
 		}
