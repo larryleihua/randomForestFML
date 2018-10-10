@@ -94,7 +94,7 @@ Rcpp::NumericVector get_prob_from_avg_uniq(Rcpp::NumericVector avg_uniq) {
 
 
 // [[Rcpp::export]]
-Rcpp::IntegerVector seqBoot(Rcpp::IntegerMatrix indM, long sLen = -1, long seed = -1) {
+Rcpp::IntegerVector seqBoot_index(Rcpp::IntegerMatrix indM, long sLen = -1, long seed = -1) {
   if(seed != -1) {
     srand(seed);
   }
