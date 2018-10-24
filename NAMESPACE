@@ -2,7 +2,8 @@ useDynLib(randomForestFML, .registration=TRUE)
 
 export(combine, getTree, grow, importance, margin, MDSplot, na.roughfix,
        partialPlot, randomForestFML, rfImpute, treesize, tuneRF,
-       varImpPlot, varUsed, rfNews, outlier, classCenter, rfcv)
+       varImpPlot, varUsed, rfNews, outlier, classCenter, rfcv, 
+	seqBoot, getIndMat)
 
 S3method(print, randomForestFML)
 S3method(predict, randomForestFML)

@@ -12,7 +12,6 @@ seqBoot <- function(indMat, sLen=NULL)
   while(length(phi)<sLen) # the loop for sequential bootstrap
   {
     # update average uniqueness based on phi
-    # u_ti <- indMat[prev_rowSums!=0,]/prev_rowSums[prev_rowSums!=0]
     u_ti <- indMat / (1 + prev_rowSums)
     ubar_i <- apply(u_ti,2,sum) / apply(indMat,2,sum)
     
@@ -24,7 +23,13 @@ seqBoot <- function(indMat, sLen=NULL)
   return(phi)
 }
 
-get_indM <- function(t1_Fea, t1) {
+#' @param t1_Fea: a vector for time index (in terms of tick/volume/dollar/etc. bars) for the end of each features bars
+#' @param t1: a vector for time index (in terms of tick/volume/dollar/etc. bars) that corresponds to the event (eg, hitting some barrier)
+#' @examples
+#' t1_Fea <- c(2,5,11)
+#' t1 <- c(9,11,15)
+#' getIndMat(t1_Fea, t1)
+getIndMat <- function(t1_Fea, t1) {
   I <- length(t1_Fea) # number of features bars
   if(I!=length(t1)){stop("Error! The number of features bars should be the same as the number of t1")}
   t1_max <- max(t1) # this should be the same as the total number of bars
@@ -33,4 +38,5 @@ get_indM <- function(t1_Fea, t1) {
   {
     indMat[(t1_Fea[i]+1):t1[i],i] <- 1
   }
+  return(indMat)
 }
