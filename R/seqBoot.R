@@ -1,3 +1,12 @@
+#' @param indMat an indicator matrix obtained from randomForestFML::getIndMat()
+#' @param sLen number of observations to be sampled (with replacement); 'sLen' should not be greater than the number of columns of 'indMat'
+#' @return a vector of indices sampled
+#' 
+#' @examples
+#' t1_Fea <- c(2,5,11)
+#' t1 <- c(9,11,15)
+#' indMat <- getIndMat(t1_Fea, t1)
+#' seqBoot(indMat)
 seqBoot <- function(indMat, sLen=NULL)
 {
   ## construct indicator matrix 1_{t,i}: indMat
@@ -23,8 +32,8 @@ seqBoot <- function(indMat, sLen=NULL)
   return(phi)
 }
 
-#' @param t1_Fea: a vector for time index (in terms of tick/volume/dollar/etc. bars) for the end of each features bars
-#' @param t1: a vector for time index (in terms of tick/volume/dollar/etc. bars) that corresponds to the event (eg, hitting some barrier)
+#' @param t1_Fea a vector for time index (in terms of tick/volume/dollar/etc. bars) for the end of each features bars
+#' @param t1 a vector for time index (in terms of tick/volume/dollar/etc. bars) that corresponds to the event (eg, hitting some barrier)
 #' @examples
 #' t1_Fea <- c(2,5,11)
 #' t1 <- c(9,11,15)
